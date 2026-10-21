@@ -57,6 +57,17 @@ function pintarTareas() {
 
       
     });
+
+
+        const titulo = document.createElement('span');
+        titulo.textContent = tarea.titulo;
+
+        const prioridad = document.createElement('span');
+        prioridad.textContent = tarea.prioridad;
+
+        const boton = document.createElement('button');
+        boton.textContent = tarea.completada ? 'Marcar como pendiente' : 'Marcar como completada';
+
 }
 
 // 5. MANEJO DE EVENTOS: Captura de formulario
