@@ -74,7 +74,11 @@ function pintarTareas() {
         });
         pintarTareas();
     });
+    li.appendChild(titulo);
+    li.appendChild(prioridad);
+    li.appendChild(boton);
 
+    listaContenedor.appendChild(li);
 
 }
 
