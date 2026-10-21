@@ -55,70 +55,74 @@ function pintarTareas() {
             li.classList.add('completada');
         }
 
-    });
+        const titulo = document.createElement('span');
+        titulo.textContent = tarea.titulo;
 
-    const titulo = document.createElement('span');
-    titulo.textContent = tarea.titulo;
+        const prioridad = document.createElement('span');
+        prioridad.textContent = tarea.prioridad;
 
-    const prioridad = document.createElement('span');
-    prioridad.textContent = tarea.prioridad;
+        const boton = document.createElement('button');
+        boton.textContent = tarea.completada
+            ? 'Marcar como pendiente'
+            : 'Marcar como completada';
 
-    const boton = document.createElement('button');
-    boton.textContent = tarea.completada ? 'Marcar como pendiente' : 'Marcar como completada';
-    boton.addEventListener('click', () => {
-        tareas = tareas.map(t => {
-            if (t.id === tarea.id) {
-                return { ...t, completada: !t.completada };
-            }
-            return t;
+        boton.addEventListener('click', () => {
+            tareas = tareas.map(t => {
+                if (t.id === tarea.id) {
+                    return { ...t, completada: !t.completada };
+                }
+                return t;
+            });
+
+            pintarTareas();
         });
-        pintarTareas();
+
+        li.appendChild(titulo);
+        li.appendChild(prioridad);
+        li.appendChild(boton);
+
+        listaContenedor.appendChild(li);
     });
-    li.appendChild(titulo);
-    li.appendChild(prioridad);
-    li.appendChild(boton);
-
-    listaContenedor.appendChild(li);
-
 }
 
+
 // 5. MANEJO DE EVENTOS: Captura de formulario
-formulario.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const titulo = inputTitulo.value.trim();
-    const prioridad = selectPrioridad.value;
+        formulario.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const titulo = inputTitulo.value.trim();
+            const prioridad = selectPrioridad.value;
 
-    if (titulo === '') {
-        return;
-    }
+            if (titulo === '') {
+                return;
+            }
 
-    const nuevaTarea = {
-        id: Date.now(),
-        titulo: titulo,
-        prioridad: prioridad,
-        completada: false
-    };
+            const nuevaTarea = {
+                id: Date.now(),
+                titulo: titulo,
+                prioridad: prioridad,
+                completada: false
+            };
 
-    tareas = [...tareas, nuevaTarea];
+            tareas = [...tareas, nuevaTarea];
 
-    pintarTareas();
+            pintarTareas();
 
-    formulario.reset();
-});
+            formulario.reset();
+        }); 
 
 
-// 6. MANEJO DE EVENTOS: Captura de botones de filtrado
-botonesFiltro.forEach(boton => {
-    boton.addEventListener('click', (event) => {
-        // Quitar clase active al botón anterior y ponérsela al pulsado
-        document.querySelector('.btn-filtro.active').classList.remove('active');
-        event.target.classList.add('active');
+        // 6. MANEJO DE EVENTOS: Captura de botones de filtrado
+        botonesFiltro.forEach(boton => {
+            boton.addEventListener('click', (event) => {
+                // Quitar clase active al botón anterior y ponérsela al pulsado
+                document.querySelector('.btn-filtro.active').classList.remove('active');
+                event.target.classList.add('active');
 
-        filtroActual = boton.getAttribute('data-filtro');
+                filtroActual = boton.getAttribute('data-filtro');
 
-        pintarTareas();
-    });
-});
+                pintarTareas();
+            });
+        });
 
-// Arrancar la aplicación
-inicializarApp();
+        // Arrancar la aplicación
+        inicializarApp();
