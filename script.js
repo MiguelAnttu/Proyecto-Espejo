@@ -87,8 +87,7 @@ formulario.addEventListener('submit', (event) => {
     event.preventDefault();
     const titulo = inputTitulo.value.trim();
     const prioridad = selectPrioridad.value;
-    // TODO: Capturar los valores de los inputs de forma segura
-    // TODO: Crear un nuevo objeto tarea inmutable con un id único (Date.now())
+
     if (titulo === '') {
         return;
     }
@@ -120,9 +119,6 @@ botonesFiltro.forEach(boton => {
         pintarTareas();
     });
 });
-// TODO: Actualizar la variable 'filtroActual' con el atributo 'data-filtro' del botón
-// TODO: Invocar pintarTareas() para refrescar la pantalla
-
 
 // Arrancar la aplicación
 inicializarApp();
