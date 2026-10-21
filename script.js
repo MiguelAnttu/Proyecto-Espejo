@@ -89,7 +89,7 @@ formulario.addEventListener('submit', (event) => {
     const prioridad = selectPrioridad.value;
     // TODO: Capturar los valores de los inputs de forma segura
     // TODO: Crear un nuevo objeto tarea inmutable con un id único (Date.now())
-      if (titulo === '') {
+    if (titulo === '') {
         return;
     }
 
@@ -100,11 +100,13 @@ formulario.addEventListener('submit', (event) => {
         completada: false
     };
 
-        tareas = [...tareas, nuevaTarea];
+    tareas = [...tareas, nuevaTarea];
 
-    // TODO: Añadir el objeto al array global de tareas de forma inmutable (operador spread)
-    // TODO: Volver a invocar pintarTareas() y resetear el formulario
+    pintarTareas();
+
+    formulario.reset();
 });
+
 
 // 6. MANEJO DE EVENTOS: Captura de botones de filtrado
 botonesFiltro.forEach(boton => {
@@ -113,10 +115,14 @@ botonesFiltro.forEach(boton => {
         document.querySelector('.btn-filtro.active').classList.remove('active');
         event.target.classList.add('active');
 
-        // TODO: Actualizar la variable 'filtroActual' con el atributo 'data-filtro' del botón
-        // TODO: Invocar pintarTareas() para refrescar la pantalla
+        filtroActual = boton.getAttribute('data-filtro');
+
+        pintarTareas();
     });
 });
+// TODO: Actualizar la variable 'filtroActual' con el atributo 'data-filtro' del botón
+// TODO: Invocar pintarTareas() para refrescar la pantalla
+
 
 // Arrancar la aplicación
 inicializarApp();
