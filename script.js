@@ -85,7 +85,8 @@ function pintarTareas() {
 // 5. MANEJO DE EVENTOS: Captura de formulario
 formulario.addEventListener('submit', (event) => {
     event.preventDefault();
-
+    const titulo = inputTitulo.value.trim();
+    const prioridad = selectPrioridad.value;
     // TODO: Capturar los valores de los inputs de forma segura
     // TODO: Crear un nuevo objeto tarea inmutable con un id único (Date.now())
     // TODO: Añadir el objeto al array global de tareas de forma inmutable (operador spread)
