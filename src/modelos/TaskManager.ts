@@ -103,4 +103,37 @@ private async inicializarApp(): Promise<void> {
 
     this.pintarTareas();
 }
+
+
+public agregarTarea(): void {
+
+    const titulo = this.inputTitulo.value.trim();
+    const prioridad = this.selectPrioridad.value;
+
+    if (titulo === '') {
+        return;
+    }
+
+    if (
+        prioridad !== 'Alta' &&
+        prioridad !== 'Media' &&
+        prioridad !== 'Baja'
+    ) {
+        return;
+    }
+
+    const nuevaTarea: Tarea = {
+        id: Date.now(),
+        titulo: titulo,
+        prioridad: prioridad,
+        completada: false
+    };
+
+    this.tareas.push(nuevaTarea);
+
+    this.pintarTareas();
+
+    this.formulario.reset();
+}
+
 }
