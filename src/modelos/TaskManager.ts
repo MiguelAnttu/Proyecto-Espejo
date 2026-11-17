@@ -38,5 +38,27 @@ export class TaskManager {
         this.selectPrioridad = document.querySelector<HTMLSelectElement>('#select-prioridad')!;
         this.listaContenedor = document.querySelector<HTMLElement>('#lista-tareas')!;
         this.loadingState = document.querySelector<HTMLElement>('#loading-state')!;
+
+void this.inicializarApp();
+
     }
+
+public pintarTareas(): void {
+    this.listaContenedor.innerHTML = '';
 }
+
+private async inicializarApp(): Promise<void> {
+
+    await new Promise<void>((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 1500);
+    });
+
+    this.loadingState.style.display = 'none';
+
+    this.pintarTareas();
+}
+}
+
+ 
