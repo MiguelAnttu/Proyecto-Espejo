@@ -42,9 +42,53 @@ export class TaskManager {
 void this.inicializarApp();
 
     }
-
 public pintarTareas(): void {
+
     this.listaContenedor.innerHTML = '';
+
+    const tareasFiltradas = this.tareas.filter(tarea => {
+
+        if (this.filtroActual === 'Pendientes') {
+            return !tarea.completada;
+
+        } else if (this.filtroActual === 'Completadas') {
+            return tarea.completada;
+
+        } else {
+            return true;
+        }
+    });
+
+    tareasFiltradas.forEach(tarea => {
+
+        const li = document.createElement('li');
+
+        li.classList.add(
+            `prioridad-${tarea.prioridad.toLowerCase()}`
+        );
+
+        if (tarea.completada) {
+            li.classList.add('completada');
+        }
+
+        const titulo = document.createElement('span');
+        titulo.textContent = tarea.titulo;
+
+        const prioridad = document.createElement('span');
+        prioridad.textContent = tarea.prioridad;
+
+        const boton = document.createElement('button');
+
+        boton.textContent = tarea.completada
+            ? 'Marcar como pendiente'
+            : 'Marcar como completada';
+
+        li.appendChild(titulo);
+        li.appendChild(prioridad);
+        li.appendChild(boton);
+
+        this.listaContenedor.appendChild(li);
+    });
 }
 
 private async inicializarApp(): Promise<void> {
@@ -60,5 +104,3 @@ private async inicializarApp(): Promise<void> {
     this.pintarTareas();
 }
 }
-
- 
