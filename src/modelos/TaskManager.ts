@@ -39,6 +39,8 @@ export class TaskManager {
         this.listaContenedor = document.querySelector<HTMLElement>('#lista-tareas')!;
         this.loadingState = document.querySelector<HTMLElement>('#loading-state')!;
 
+        this.cargarTareas();
+
         void this.inicializarApp();
         this.formulario.addEventListener('submit', (event: SubmitEvent) => {
         event.preventDefault();
@@ -141,6 +143,8 @@ public agregarTarea(): void {
 
     this.tareas.push(nuevaTarea);
 
+    this.guardarTareas();
+
     this.pintarTareas();
 
     this.formulario.reset();
@@ -159,6 +163,8 @@ public cambiarEstado(id: number): void {
 
         return tarea;
     });
+    
+    this.guardarTareas();
 
     this.pintarTareas();
 }
@@ -184,6 +190,55 @@ private configurarFiltros(): void {
             this.pintarTareas();
         });
     });
+}
+
+private guardarTareas(): void {
+    localStorage.setItem(
+        'tareas',
+        JSON.stringify(this.tareas)
+    );
+}
+
+
+private sonTareas(datos: unknown): datos is Tarea[] {
+
+    return Array.isArray(datos) && datos.every((dato: unknown) => {
+
+        if (typeof dato !== 'object' || dato === null) {
+            return false;
+        }
+
+        const tarea = dato as Record<string, unknown>;
+
+        return typeof tarea['id'] === 'number'
+            && typeof tarea['titulo'] === 'string'
+            && (
+                tarea['prioridad'] === 'Alta' ||
+                tarea['prioridad'] === 'Media' ||
+                tarea['prioridad'] === 'Baja'
+            )
+            && typeof tarea['completada'] === 'boolean';
+    });
+}
+
+
+private cargarTareas(): void {
+
+    const guardadas = localStorage.getItem('tareas');
+
+    if (guardadas !== null) {
+
+        try {
+            const datos: unknown = JSON.parse(guardadas);
+
+            if (this.sonTareas(datos)) {
+                this.tareas = datos;
+            }
+
+        } catch {
+            console.error('Error al cargar las tareas');
+        }
+    }
 }
 
 
