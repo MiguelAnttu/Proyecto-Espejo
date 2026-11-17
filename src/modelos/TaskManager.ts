@@ -39,7 +39,13 @@ export class TaskManager {
         this.listaContenedor = document.querySelector<HTMLElement>('#lista-tareas')!;
         this.loadingState = document.querySelector<HTMLElement>('#loading-state')!;
 
-void this.inicializarApp();
+        void this.inicializarApp();
+        this.formulario.addEventListener('submit', (event: SubmitEvent) => {
+        event.preventDefault();
+        this.agregarTarea();
+        this.configurarFiltros();
+
+});
 
     }
 public pintarTareas(): void {
@@ -78,6 +84,10 @@ public pintarTareas(): void {
         prioridad.textContent = tarea.prioridad;
 
         const boton = document.createElement('button');
+
+        boton.addEventListener('click', () => {
+           this.cambiarEstado(tarea.id);
+                });
 
         boton.textContent = tarea.completada
             ? 'Marcar como pendiente'
@@ -135,5 +145,46 @@ public agregarTarea(): void {
 
     this.formulario.reset();
 }
+
+public cambiarEstado(id: number): void {
+
+    this.tareas = this.tareas.map(tarea => {
+
+        if (tarea.id === id) {
+            return {
+                ...tarea,
+                completada: !tarea.completada
+            };
+        }
+
+        return tarea;
+    });
+
+    this.pintarTareas();
+}
+
+
+private configurarFiltros(): void {
+
+    const botonesFiltro =
+        document.querySelectorAll<HTMLButtonElement>('.btn-filtro');
+
+    botonesFiltro.forEach(boton => {
+
+        boton.addEventListener('click', () => {
+
+            document.querySelector('.btn-filtro.active')
+                ?.classList.remove('active');
+
+            boton.classList.add('active');
+
+            this.filtroActual =
+                boton.getAttribute('data-filtro') ?? 'Todas';
+
+            this.pintarTareas();
+        });
+    });
+}
+
 
 }
